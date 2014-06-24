@@ -1,51 +1,48 @@
 package Template::Plugin::Digest::MD5;
 
 use strict;
+use warnings;
 use vars qw($VERSION);
 
-$VERSION = 0.03;
+$VERSION = 0.04;
 
 use base qw(Template::Plugin);
 use Template::Plugin;
 use Template::Stash;
 use Digest::MD5 qw(md5 md5_hex md5_base64);
 
-$Template::Stash::SCALAR_OPS->{'md5'} = \&_md5;
-$Template::Stash::SCALAR_OPS->{'md5_hex'} = \&_md5_hex;
-$Template::Stash::SCALAR_OPS->{'md5_base64'} = \&_md5_base64;
+$Template::Stash::SCALAR_OPS->{'md5'}           = \&_md5;
+$Template::Stash::SCALAR_OPS->{'md5_hex'}       = \&_md5_hex;
+$Template::Stash::SCALAR_OPS->{'md5_base64'}    = \&_md5_base64;
 
 sub new {
     my ($class, $context, $options) = @_;
 
     # now define the filter and return the plugin
-    $context->define_filter('md5',    \&_md5);
-    $context->define_filter('md5_hex',    \&_md5_hex);
-    $context->define_filter('md5_base64', \&_md5_base64);
+    $context->define_filter('md5',          \&_md5);
+    $context->define_filter('md5_hex',      \&_md5_hex);
+    $context->define_filter('md5_base64',   \&_md5_base64);
     return bless {}, $class;
 }
 
-
 sub _md5 {
-    my $options = ref $_[-1] eq 'HASH' ? pop : { };
+    my $options = ref $_[-1] eq 'HASH' ? pop : {};
     return md5(join('', @_));
 }
 
 sub _md5_hex {
-    my $options = ref $_[-1] eq 'HASH' ? pop : { };
+    my $options = ref $_[-1] eq 'HASH' ? pop : {};
     return md5_hex(join('', @_));
 }
 
 sub _md5_base64 {
-    my $options = ref $_[-1] eq 'HASH' ? pop : { };
+    my $options = ref $_[-1] eq 'HASH' ? pop : {};
     return md5_base64(join('', @_));
 }
 
-
-
 1;
+
 __END__
-
-
 
 =head1 NAME
 
@@ -108,8 +105,6 @@ equivalent:
     content FILTER md5_hex;
     content.md5_base64;
 
-
-
 =head1 WARNING
 
 The L<Digest::MD5> man page notes that the MD5 algorithm is not as
@@ -119,22 +114,46 @@ hard to generate messages that produce a given digest, but it is
 probably wise to move to stronger algorithms for applications that
 depend on the digest to uniquely identify a message.
 
+=head1 SEE ALSO
+
+L<Digest::MD5>, L<Template>
+
+=head1 DEDICATION
+
+This distribution was originally created by Andrew Ford. Sadly in early 2014,
+Andrew was diagnosed with Pancreatic Cancer and passed away peacfully at home
+on 25th April 2014.
+
+One of his wishes was for his OpenSource work to continue. At his funeral, many
+of his colleagues and friends, spoke of how he felt like a person of the world, 
+and how he embrace the idea of OpenSource being for the benefit of the world.
+
+Anyone wishing to donate in memory of Andrew, please consider the following
+charities:
+
+=over
+
+=item Dignity in Dying - L<http://www.dignityindying.org.uk/>
+
+=item Marie Curie Cancer Care - L<http://www.mariecurie.org.uk/>
+
+=back
 
 =head1 AUTHOR
 
-Andrew Ford E<lt>A.Ford@ford-mason.co.ukE<gt>
+  Original Author:    Andrew Ford               2006-2014
+  Current Maintainer: Barbie <barbie@cpan.org>  2014
+
+=head1 ACKNOWLEDGEMENTS
 
 Thanks to Darren Chamberlain for a patch for vmethod support.
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT & LICENSE
 
-Copyright (C) 2006 Andrew Ford.  All Rights Reserved.
+Copyright (C) 2006-2014 Andrew Ford
+Copyright (C) 2014      Barbie for Miss Barbell Productions.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=head1 SEE ALSO
-
-C<Digest::MD5>, L<Template>
+This distribution is free software; you can redistribute it and/or
+modify it under the Artistic Licence v2.
 
 =cut
