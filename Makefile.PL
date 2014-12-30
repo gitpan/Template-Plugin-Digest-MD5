@@ -8,7 +8,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     AUTHOR              => 'Barbie <barbie@cpan.org>',
-    NAME                => 'Template-Plugin-Digest-MD5',
+    NAME                => 'Template::Plugin::Digest::MD5',
     VERSION_FROM        => 'lib/Template/Plugin/Digest/MD5.pm',
     ABSTRACT            => 'TT2 interface to the MD5 Algorithm',
     NO_META             => 1,
